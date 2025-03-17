@@ -22,7 +22,7 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { Separator } from "@/components/ui/separator";
 import paypalLogo from "@/images/paypalLogo.png";
-import { set } from "sanity";
+// import { set } from "sanity";
 import {
   createCheckoutSession,
   Metadata,
@@ -207,6 +207,7 @@ const CartPage = () => {
                         />
                       </div>
                       <Button
+                        disabled={loading}
                         onClick={handleCheckout}
                         className="w-full rounded-full font-semibold tracking-wide"
                         size="lg"

@@ -3,7 +3,6 @@ import stripe from "@/lib/stripe";
 import { backendClient } from "@/sanity/lib/backendClient";
 import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
-import { hostname } from "os";
 import Stripe from "stripe";
 
 export async function POST(req: NextRequest) {

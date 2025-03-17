@@ -1,4 +1,4 @@
-import { Divide, MapPin, Phone } from "lucide-react";
+import { MapPin, Phone } from "lucide-react";
 import React from "react";
 
 interface Props {
