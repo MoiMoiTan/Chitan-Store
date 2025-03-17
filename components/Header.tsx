@@ -5,7 +5,7 @@ import Container from "./Container";
 import MobileMenu from "./MobileMenu";
 import SearchBar from "./SearchBar";
 import CartIcon from "./CartIcon";
-import { currentUser } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import {
   ClerkLoaded,
   SignedIn,
@@ -15,11 +15,16 @@ import {
 } from "@clerk/nextjs";
 import Link from "next/link";
 import { ListOrdered } from "lucide-react";
-import { getAllCategories } from "@/sanity/helpers/queries";
+import { getAllCategories, getMyOrders } from "@/sanity/helpers/queries";
 
 const Header = async () => {
   const user = await currentUser();
+  const { userId } = await auth();
   const categories = await getAllCategories();
+  let orders = null;
+  if (userId) {
+    orders = await getMyOrders(userId);
+  }
 
   return (
     <header className="border-b border-b-gray-400 py-5 sticky top-0 z-50 bg-white">
@@ -44,7 +49,7 @@ const Header = async () => {
               text-white h-3.5 w-3.5 rounded-full text-xs font-semibold
               flex items-center justify-center"
                 >
-                  0
+                  {orders?.length ? orders?.length : 0}
                 </span>
               </Link>
               <UserButton />
