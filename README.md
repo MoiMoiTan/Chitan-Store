@@ -1,3 +1,7 @@
+Full-stack Developer | E-commerce Enthusiast
+Xây dựng và phát triển ứng dụng web với Next.js, React, TypeScript, Sanity.io, Stripe, Tailwind CSS, và Clerk. Hiện đang phát triển Chitan Store, một nền tảng thương mại điện tử thời trang, tập trung vào quản lý sản phẩm, thanh toán trực tuyến và trải nghiệm người dùng mượt mà.
+
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
