@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { notFound } from "next/navigation";
 import React from "react";
+import { urlFor } from "@/sanity/lib/image";
 
 const SingleProductPage = async ({
   params,

@@ -34,7 +34,7 @@ const ProductCharacteristics = ({ product }: { product: Product }) => {
           </p>
           <p className="flex items-center justify-between">
             Intro:{" "}
-            <span className="font-semibold tracking-wide">
+            <span className="font-semibold tracking-wide mr-1">
               {product?.intro}
             </span>
           </p>

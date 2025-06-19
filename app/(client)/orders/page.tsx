@@ -10,15 +10,32 @@ import { auth } from "@clerk/nextjs/server";
 import { FileX } from "lucide-react";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import React from "react";
 
 const OrdersPage = async () => {
   const { userId } = await auth();
   if (!userId) {
     return redirect("/");
   }
-  const orders = await getMyOrders(userId);
-  console.log(orders);
+
+  let orders;
+  try {
+    orders = await getMyOrders(userId);
+  } catch (error) {
+    return (
+      <Container className="py-10">
+        <div className="flex flex-col items-center justify-center py-5 md:py-10 px-4">
+          <FileX className="h-24 w-24 text-gray-400 mb-4" />
+          <Title>Error Loading Orders</Title>
+          <p className="mt-2 text-sm text-gray-600 text-center max-w-md">
+            An error occurred while loading your orders. Please try again later.
+          </p>
+          <Button asChild className="mt-6">
+            <Link href="/">Back to Home</Link>
+          </Button>
+        </div>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-10">
@@ -32,7 +49,7 @@ const OrdersPage = async () => {
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead className="w-auto ">Order Number</TableHead>
+                    <TableHead className="w-auto">Order ID</TableHead>
                     <TableHead className="hidden md:table-cell">Date</TableHead>
                     <TableHead>Customer</TableHead>
                     <TableHead className="hidden sm:table-cell">
@@ -41,7 +58,7 @@ const OrdersPage = async () => {
                     <TableHead>Total</TableHead>
                     <TableHead>Status</TableHead>
                     <TableHead className="hidden md:table-cell">
-                      Invoice Number
+                      Invoice
                     </TableHead>
                   </TableRow>
                 </TableHeader>
@@ -54,13 +71,12 @@ const OrdersPage = async () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-5 md:py-10 px-4">
           <FileX className="h-24 w-24 text-gray-400 mb-4" />
-          <Title>No orders found</Title>
+          <Title>No Orders Found</Title>
           <p className="mt-2 text-sm text-gray-600 text-center max-w-md">
-            It looks like you haven&apos;t placed any orders yet. Start shopping
-            to see your orders here!
+            You haven't placed any orders yet. Start shopping now!
           </p>
           <Button asChild className="mt-6">
-            <Link href={"/"}>Browse Products</Link>
+            <Link href="/">Browse Products</Link>
           </Button>
         </div>
       )}

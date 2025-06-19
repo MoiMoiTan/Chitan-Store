@@ -76,13 +76,13 @@ const OrderDetailsDialog: FC<Props> = ({ order, isOpen, onClose }) => {
                     <Image
                       src={urlFor(product?.product?.images[0]).url()}
                       alt="productImage"
-                      width={100}
-                      height={100}
-                      className="border rounded-sm object-contain"
+                      width={80}
+                      height={80}
+                      className="border rounded-sm object-cover"
                     />
                   )}
                   {product?.product && (
-                    <p className=" line-clamp-1 font-medium">
+                    <p className="line-clamp-1 font-medium">
                       {product?.product?.name}
                     </p>
                   )}
@@ -101,30 +101,37 @@ const OrderDetailsDialog: FC<Props> = ({ order, isOpen, onClose }) => {
           </TableBody>
         </Table>
         <div className="mt-4 text-right flex items-center justify-end">
-          <div className="w-44  flex flex-col gap-1">
-            {order?.amountDiscount !== 0 && (
-              <div className="w-full flex items-center justify-between">
-                <strong>Subtotal:</strong>
-                <PriceFormatter
-                  amount={
-                    (order?.totalPrice as number) +
-                    (order?.amountDiscount as number)
-                  }
-                />
-              </div>
-            )}
-            {order?.amountDiscount !== 0 && (
-              <div className="w-full flex items-center justify-between">
-                <strong>Discount: </strong>
-                <PriceFormatter amount={order?.amountDiscount} />
-              </div>
-            )}
-
+          <div className="w-44 flex flex-col gap-1">
+            <div className="w-full flex items-center justify-between">
+              <strong>Subtotal:</strong>
+              <PriceFormatter
+                amount={order?.products?.reduce((total, product) => {
+                  const price = product?.product?.price ?? 0;
+                  const discount =
+                    ((product?.product?.discount ?? 0) * price) / 100;
+                  const discountedPrice = price + discount;
+                  return total + discountedPrice * (product?.quantity ?? 0);
+                }, 0)}
+              />
+            </div>
+            <div className="w-full flex items-center justify-between">
+              <strong>Discount:</strong>
+              <PriceFormatter
+                amount={order?.products?.reduce((total, product) => {
+                  const price = product?.product?.price ?? 0;
+                  const discount =
+                    ((product?.product?.discount ?? 0) * price) / 100;
+                  const quantity = product?.quantity ?? 0;
+                  return total + discount * quantity;
+                }, 0)}
+                className="text-red-500"
+              />
+            </div>
             <div className="w-full flex items-center justify-between">
               <strong>Total:</strong>
               <PriceFormatter
                 amount={order?.totalPrice}
-                className="text-balack font-bold"
+                className="text-black font-bold"
               />
             </div>
           </div>

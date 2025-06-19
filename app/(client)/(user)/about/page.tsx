@@ -3,7 +3,7 @@ import React from "react";
 
 const AboutPage = () => {
   return (
-    <Container className="max-w-6xl px-8 py-12">
+    <Container className="max-w-6xl lg:px-8 py-12">
       <h1 className="text-3xl font-bold mb-6">About Chitan Store</h1>
       <p className="mb-4">
         Welcome to <b>Chitan Store</b> — your go-to destination for modern,

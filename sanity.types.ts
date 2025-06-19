@@ -224,7 +224,21 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Order | Product | Category | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | Slug;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Order
+  | Product
+  | Category
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./sanity/helpers/queries.ts
 // Variable: PRODUCT_BY_SLUG_QUERY
@@ -306,6 +320,14 @@ export type MY_ORDERS_QUERYResult = Array<{
   clerkUserId?: string;
   customerName?: string;
   email?: string;
+  phoneNumber?: string; // Thêm thuộc tính phoneNumber
+  address?: {
+    // Thêm thuộc tính address
+    line1?: string;
+    city?: string;
+    country?: string;
+    // Thêm các thuộc tính khác của address nếu cần
+  };
   stripePaymentIntentId?: string;
   products: Array<{
     product: {
@@ -353,12 +375,13 @@ export type MY_ORDERS_QUERYResult = Array<{
   orderDate?: string;
 }>;
 
+
 // Query TypeMap
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "*[_type == 'product' && slug.current == $slug] | order(name asc) [0]": PRODUCT_BY_SLUG_QUERYResult;
-    "*[_type==\"category\"] | order(name asc)": CATEGORIES_QUERYResult;
+    '*[_type=="category"] | order(name asc)': CATEGORIES_QUERYResult;
     "*[_type == 'order' && clerkUserId == $userId] | order(orderData desc){\n      ...,products[]{\n        ...,product->\n      }\n  }": MY_ORDERS_QUERYResult;
   }
 }

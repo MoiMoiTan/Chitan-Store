@@ -81,3 +81,16 @@ body {
 body {
   font-family:  var(--font-raleway);
 }
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-33.333%); /* Moves by 1/3 of the total width for seamless looping */
+  }
+}
+
+.animate-scroll {
+  animation: scroll 30s linear infinite;
+}

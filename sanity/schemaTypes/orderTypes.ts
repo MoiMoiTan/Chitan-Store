@@ -13,15 +13,17 @@ export const orderType = defineType({
       type: "string",
       validation: (Rule) => Rule.required(),
     }),
-    {
+    defineField({
       name: "invoice",
+      title: "Invoice",
       type: "object",
       fields: [
-        { name: "id", type: "string" },
-        { name: "number", type: "string" },
-        { name: "hosted_invoice_url", type: "url" },
-      ],
-    },
+        { name: "id", type: "string", validation: (Rule) => Rule.optional() },
+        { name: "number", type: "string", validation: (Rule) => Rule.optional() },
+        { name: "hosted_invoice_url", type: "url", validation: (Rule) => Rule.optional() },
+        { name: "invoice_pdf", type: "url", validation: (Rule) => Rule.optional() }
+      ]
+    }),
     defineField({
       name: "stripeCheckoutSessionId",
       title: "Stripe Checkout Session ID",
@@ -147,6 +149,22 @@ export const orderType = defineType({
       name: "orderDate",
       title: "Order Date",
       type: "datetime",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "shippingAddress",
+      title: "Shipping Address",
+      type: "object",
+      fields: [
+        { name: "name", type: "string" },
+        { name: "line1", type: "string" },
+        { name: "line2", type: "string", validation: (Rule) => Rule.optional() },
+        { name: "city", type: "string" },
+        { name: "state", type: "string" },
+        { name: "postal_code", type: "string" },
+        { name: "country", type: "string" },
+        { name: "phone", type: "string" }
+      ],
       validation: (Rule) => Rule.required(),
     }),
   ],
